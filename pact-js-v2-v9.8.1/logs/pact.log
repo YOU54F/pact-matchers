@@ -1,0 +1,11 @@
+I, [2022-10-16T02:53:13.995786 #48223]  INFO -- : Registered expected interaction GET /matchers/v2
+I, [2022-10-16T02:53:13.996907 #48223]  INFO -- : Received request GET /matchers/v2
+I, [2022-10-16T02:53:13.997279 #48223]  INFO -- : Found matching response for GET /matchers/v2
+I, [2022-10-16T02:53:14.001544 #48223]  INFO -- : Verifying - interactions matched
+I, [2022-10-16T02:53:14.003313 #48223]  INFO -- : Cleared interactions
+I, [2022-10-16T02:53:14.008094 #48223]  INFO -- : Registered expected interaction GET /matchers/v2
+I, [2022-10-16T02:53:14.008858 #48223]  INFO -- : Received request GET /matchers/v2
+I, [2022-10-16T02:53:14.009012 #48223]  INFO -- : Found matching response for GET /matchers/v2
+I, [2022-10-16T02:53:14.010842 #48223]  INFO -- : Verifying - interactions matched
+I, [2022-10-16T02:53:14.012499 #48223]  INFO -- : Cleared interactions
+I, [2022-10-16T02:53:14.014170 #48223]  INFO -- : Writing pact for v2-provider to /Users/saf/matcherstest/pact-js-v2-v9.8.1/pacts/v2-consumer-pact-js-v9-v2-provider.json
