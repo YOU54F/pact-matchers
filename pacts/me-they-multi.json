@@ -1,0 +1,42 @@
+{
+  "consumer": {
+    "name": "anotherclient"
+  },
+  "provider": {
+    "name": "they"
+  },
+  "interactions": [
+    {
+      "description": "Provider state success 2",
+      "provider_state": "There is a greeting",
+      "request": {
+        "method": "GET",
+        "path": "/somestate"
+      },
+      "response": {
+        "status": 200,
+        "headers": {},
+        "body": {
+          "greeting": "State data!"
+        }
+      }
+    },
+    {
+      "description": "Greeting 1",
+      "request": {
+        "method": "GET",
+        "path": "/"
+      },
+      "response": {
+        "status": 200,
+        "headers": {},
+        "body": {
+          "greeting": "Hello"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecificationVersion": "2.0.0"
+  }
+}

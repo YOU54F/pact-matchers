@@ -1,0 +1,80 @@
+{
+  "consumer": {
+    "name": "Jest-Consumer-Example"
+  },
+  "interactions": [
+    {
+      "description": "a request for cats with given catId",
+      "providerState": "i have a list of cats",
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "matchingRules": {
+          "$.query.$['catId[]'][0]": {
+            "match": "regex",
+            "regex": "[0-9]+"
+          },
+          "$.query.$['catId[]'][1]": {
+            "match": "regex",
+            "regex": "[0-9]+"
+          }
+        },
+        "method": "GET",
+        "path": "/cats",
+        "query": "catId[]=1&catId[]=1"
+      },
+      "response": {
+        "body": [
+          {
+            "cat": 2
+          },
+          {
+            "cat": 3
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for dogs",
+      "providerState": "i have a list of dogs",
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "method": "GET",
+        "path": "/dogs"
+      },
+      "response": {
+        "body": [
+          {
+            "dog": 1
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.1.2"
+    },
+    "pactRust": {
+      "ffi": "0.3.8",
+      "models": "0.4.4"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "Jest-Provider-Example"
+  }
+}

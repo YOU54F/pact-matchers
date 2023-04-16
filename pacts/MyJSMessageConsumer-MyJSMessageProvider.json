@@ -1,0 +1,114 @@
+{
+  "consumer": {
+    "name": "MyJSMessageConsumer"
+  },
+  "messages": [
+    {
+      "contents": {
+        "id": 1,
+        "name": "drover",
+        "type": "bulldog"
+      },
+      "description": "a request for a dog",
+      "matchingRules": {
+        "body": {
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.type": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "^(bulldog|sheepdog)$"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "contentType": "application/json",
+        "queue": "animals"
+      },
+      "providerStates": [
+        {
+          "name": "a dog named drover"
+        }
+      ]
+    },
+    {
+      "contents": {
+        "id": 1,
+        "name": "rover",
+        "type": "bulldog"
+      },
+      "description": "a request for a dog",
+      "matchingRules": {
+        "body": {
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.type": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "^(bulldog|sheepdog)$"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "contentType": "application/json",
+        "queue": "animals"
+      },
+      "providerStates": [
+        {
+          "name": "a dog named rover"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.1.2"
+    },
+    "pactRust": {
+      "ffi": "0.3.8",
+      "models": "0.4.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "MyJSMessageProvider"
+  }
+}

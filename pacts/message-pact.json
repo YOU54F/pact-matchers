@@ -1,0 +1,38 @@
+{
+  "consumer": {
+    "name": "Foo Consumer"
+  },
+  "provider": {
+    "name": "Bar Producer"
+  },
+  "messages": [
+    {
+      "_id": "1",
+      "description": "an alligator message",
+      "providerStates": [
+        {
+          "name": "A mary exists",
+          "params": {
+            "foo": "bar",
+            "count": 3333
+          }
+        }
+      ],
+      "contents": {
+        "name": "Mary"
+      },
+      "matchingRules": {
+        "body": {
+        }
+      },
+      "metaData": {
+        "some": "data"
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

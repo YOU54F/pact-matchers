@@ -1,0 +1,49 @@
+{
+  "consumer": {
+    "name": "pactflow-example-consumer-golang"
+  },
+  "provider": {
+    "name": "pactflow-example-provider-golang"
+  },
+  "interactions": [
+    {
+      "description": "a request to get a product",
+      "providerState": "a product with ID 10 exists",
+      "request": {
+        "method": "GET",
+        "path": "/product/10"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "id": "10",
+          "name": "pizza",
+          "type": "food"
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/json;?.*"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.name": {
+            "match": "type"
+          },
+          "$.body.type": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

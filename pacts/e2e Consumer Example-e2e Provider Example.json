@@ -1,0 +1,336 @@
+{
+  "consumer": {
+    "name": "e2e Consumer Example"
+  },
+  "interactions": [
+    {
+      "description": "a request for an animal with ID 1",
+      "providerState": "Has an animal with ID 1",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "$.header.$": {
+            "match": "regex",
+            "regex": "Bearer\\s[a-z0-9]+"
+          },
+          "$.path": {
+            "match": "regex",
+            "regex": "/animals/[0-9]+"
+          }
+        },
+        "method": "GET",
+        "path": "/animals/1"
+      },
+      "response": {
+        "body": {
+          "age": 21,
+          "animal": "goat",
+          "available_from": "2015-08-06T16:53:10.123+01:00",
+          "eligibility": {
+            "available": true,
+            "previously_married": false
+          },
+          "first_name": "Billy",
+          "gender": "M",
+          "id": 1,
+          "interests": [
+            "walks in the garden/meadow"
+          ],
+          "last_name": "Goat",
+          "location": {
+            "country": "Australia",
+            "description": "Melbourne Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body.age": {
+            "match": "type"
+          },
+          "$.body.animal": {
+            "match": "type"
+          },
+          "$.body.available_from": {
+            "match": "regex",
+            "regex": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d(:?[0-5]\\d)?|Z)$"
+          },
+          "$.body.eligibility.available": {
+            "match": "type"
+          },
+          "$.body.eligibility.previously_married": {
+            "match": "type"
+          },
+          "$.body.first_name": {
+            "match": "type"
+          },
+          "$.body.gender": {
+            "match": "regex",
+            "regex": "F|M"
+          },
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.interests": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body.last_name": {
+            "match": "type"
+          },
+          "$.body.location.country": {
+            "match": "type"
+          },
+          "$.body.location.description": {
+            "match": "type"
+          },
+          "$.body.location.post_code": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for an animal with ID 100",
+      "providerState": "Has no animals",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "$.header.$": {
+            "match": "regex",
+            "regex": "Bearer\\s[a-z0-9]+"
+          }
+        },
+        "method": "GET",
+        "path": "/animals/100"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "description": "a request for all animals",
+      "providerState": "Has some animals",
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "$.header.$": {
+            "match": "regex",
+            "regex": "Bearer\\s[a-z0-9]+"
+          }
+        },
+        "method": "GET",
+        "path": "/animals/available"
+      },
+      "response": {
+        "body": [
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2015-08-06T16:53:10.123+01:00",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "Billy",
+            "gender": "M",
+            "id": 1,
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          },
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2015-08-06T16:53:10.123+01:00",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "Billy",
+            "gender": "M",
+            "id": 1,
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type",
+            "min": 2
+          },
+          "$.body[*].age": {
+            "match": "type"
+          },
+          "$.body[*].animal": {
+            "match": "type"
+          },
+          "$.body[*].available_from": {
+            "match": "regex",
+            "regex": "^\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d(:?[0-5]\\d)?|Z)$"
+          },
+          "$.body[*].eligibility.available": {
+            "match": "type"
+          },
+          "$.body[*].eligibility.previously_married": {
+            "match": "type"
+          },
+          "$.body[*].first_name": {
+            "match": "type"
+          },
+          "$.body[*].gender": {
+            "match": "regex",
+            "regex": "F|M"
+          },
+          "$.body[*].id": {
+            "match": "type"
+          },
+          "$.body[*].interests": {
+            "match": "type",
+            "min": 1
+          },
+          "$.body[*].last_name": {
+            "match": "type"
+          },
+          "$.body[*].location.country": {
+            "match": "type"
+          },
+          "$.body[*].location.description": {
+            "match": "type"
+          },
+          "$.body[*].location.post_code": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to create a new mate",
+      "providerState": "is authenticated",
+      "request": {
+        "body": {
+          "age": 27,
+          "animal": "goat",
+          "available_from": "2017-12-04T14:47:18.582Z",
+          "eligibility": {
+            "available": true,
+            "previously_married": true
+          },
+          "first_name": "Nanny",
+          "gender": "F",
+          "id": 2,
+          "interests": [
+            "walks in the garden/meadow",
+            "parkour"
+          ],
+          "last_name": "Doe",
+          "location": {
+            "country": "Australia",
+            "description": "Werribee Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Authorization": "Bearer token",
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          },
+          "$.header.$.Authorization": {
+            "match": "regex",
+            "regex": "Bearer\\s[a-z0-9]+"
+          }
+        },
+        "method": "POST",
+        "path": "/animals"
+      },
+      "response": {
+        "body": {
+          "age": 27,
+          "animal": "goat",
+          "available_from": "2017-12-04T14:47:18.582Z",
+          "eligibility": {
+            "available": true,
+            "previously_married": true
+          },
+          "first_name": "Nanny",
+          "gender": "F",
+          "id": 2,
+          "interests": [
+            "walks in the garden/meadow",
+            "parkour"
+          ],
+          "last_name": "Doe",
+          "location": {
+            "country": "Australia",
+            "description": "Werribee Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all animals",
+      "providerState": "is not authenticated",
+      "request": {
+        "method": "GET",
+        "path": "/animals/available"
+      },
+      "response": {
+        "status": 401
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.1.2"
+    },
+    "pactRust": {
+      "ffi": "0.3.8",
+      "models": "0.4.4"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "e2e Provider Example"
+  }
+}

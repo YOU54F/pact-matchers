@@ -1,0 +1,32 @@
+{
+  "consumer": {
+    "name": "Foo"
+  },
+  "provider": {
+    "name": "Bar"
+  },
+  "messages": [
+    {
+      "description": "a test message",
+      "contents": {
+        "text": "Hello world!!!!!"
+      },
+      "matchingRules": {
+        "body": {
+          "$.text": {
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  }
+}

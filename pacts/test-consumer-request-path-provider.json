@@ -1,0 +1,57 @@
+{
+  "consumer": {
+    "name": "test-consumer"
+  },
+  "provider": {
+    "name": "request-path-provider"
+  },
+  "interactions": [
+    {
+      "description": "a GET to /request/path/1",
+      "providerState": "Any",
+      "request": {
+        "method": "GET",
+        "path": "/request/path/1",
+        "matchingRules": {
+          "$.path": {
+            "match": "regex",
+            "regex": "\\/request\\/path\\/(?![2]$)\\d+"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "id": "1",
+          "status": "LOOSE_MATCH"
+        }
+      }
+    },
+    {
+      "description": "a GET to /request/path/2",
+      "providerState": "Any",
+      "request": {
+        "method": "GET",
+        "path": "/request/path/2"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "id": "2",
+          "status": "RIGID_MATCH"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

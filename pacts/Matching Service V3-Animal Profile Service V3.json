@@ -1,0 +1,1431 @@
+{
+  "consumer": {
+    "name": "Matching Service V3"
+  },
+  "interactions": [
+    {
+      "description": "a request to create a new mate with JSON data",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        }
+      ],
+      "request": {
+        "body": {
+          "age": 27,
+          "animal": "goat",
+          "available_from": "2017-12-04T14:47:18.582Z",
+          "eligibility": {
+            "available": true,
+            "previously_married": true
+          },
+          "first_name": "Nanny",
+          "gender": "F",
+          "id": 2,
+          "interests": [
+            "walks in the garden/meadow",
+            "parkour"
+          ],
+          "last_name": "Doe",
+          "location": {
+            "country": "Australia",
+            "description": "Werribee Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "method": "POST",
+        "path": "/animals"
+      },
+      "response": {
+        "body": {
+          "age": 27,
+          "animal": "goat",
+          "available_from": "2017-12-04T14:47:18.582Z",
+          "eligibility": {
+            "available": true,
+            "previously_married": true
+          },
+          "first_name": "Nanny",
+          "gender": "F",
+          "id": 2,
+          "interests": [
+            "walks in the garden/meadow",
+            "parkour"
+          ],
+          "last_name": "Doe",
+          "location": {
+            "country": "Australia",
+            "description": "Werribee Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to create a new mate with x-www-form-urlencoded data",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        }
+      ],
+      "request": {
+        "body": "first_name=Nanny&last_name=Doe",
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "method": "POST",
+        "path": "/animals"
+      },
+      "response": {
+        "body": {
+          "first_name": "Nanny",
+          "id": 1,
+          "last_name": "Doe"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for an animal as text with an ID",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has an animal with ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": "text/plain",
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/animals/100"
+      },
+      "response": {
+        "body": "id=100;first_name=Nanny;last_name=Doe;animal=goat",
+        "headers": {
+          "Content-Type": "text/plain; charset=utf-8"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for an animal with an ID",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has an animal with ID",
+          "params": {
+            "id": 100
+          }
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/animals/100"
+      },
+      "response": {
+        "body": {
+          "age": 21,
+          "animal": "goat",
+          "available_from": "2016-02-11T09:46:56.023Z",
+          "eligibility": {
+            "available": true,
+            "previously_married": false
+          },
+          "first_name": "Billy",
+          "gender": "M",
+          "id": 100,
+          "identifiers": {
+            "004": {
+              "description": "thing",
+              "id": "004"
+            }
+          },
+          "interests": [
+            "walks in the garden/meadow"
+          ],
+          "last_name": "Goat",
+          "location": {
+            "country": "Australia",
+            "description": "Melbourne Zoo",
+            "post_code": 3000
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.animal": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.available_from": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$.eligibility.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.eligibility.previously_married": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.first_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.gender": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                }
+              ]
+            },
+            "$.identifiers": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "values"
+                }
+              ]
+            },
+            "$.identifiers[4].description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.identifiers[4].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9]+"
+                }
+              ]
+            },
+            "$.interests": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.last_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.location.country": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.location.description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.location.post_code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for an animal by ID",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has no animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/animals/100"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "description": "a request for all animals",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has some animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/animals/available"
+      },
+      "response": {
+        "body": [
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2016-02-11T09:46:56.023Z",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "Billy",
+            "gender": "M",
+            "id": 100,
+            "identifiers": {
+              "004": {
+                "description": "thing",
+                "id": "004"
+              }
+            },
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          },
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2016-02-11T09:46:56.023Z",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "Billy",
+            "gender": "M",
+            "id": 100,
+            "identifiers": {
+              "004": {
+                "description": "thing",
+                "id": "004"
+              }
+            },
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 2
+                }
+              ]
+            },
+            "$[*].age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                },
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].animal": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].available_from": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                },
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$[*].eligibility.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].eligibility.previously_married": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].first_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].gender": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                },
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                }
+              ]
+            },
+            "$[*].identifiers": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "values"
+                },
+                {
+                  "match": "values"
+                }
+              ]
+            },
+            "$[*].identifiers[4].description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].identifiers[4].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9]+"
+                },
+                {
+                  "match": "regex",
+                  "regex": "[0-9]+"
+                }
+              ]
+            },
+            "$[*].interests": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].last_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.country": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.post_code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                },
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all animals filtered by a query containing chinese characters",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has some animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          },
+          "query": {}
+        },
+        "method": "GET",
+        "path": "/animals/available",
+        "query": {
+          "first_name": [
+            "比利"
+          ]
+        }
+      },
+      "response": {
+        "body": [
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2016-02-11T09:46:56.023Z",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "比利",
+            "gender": "M",
+            "id": 1,
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].animal": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].available_from": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$[*].eligibility.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].eligibility.previously_married": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].first_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].gender": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].interests": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].last_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.country": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.post_code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all animals filtered by a query containing devanagari characters",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has some animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          },
+          "query": {}
+        },
+        "method": "GET",
+        "path": "/animals/available",
+        "query": {
+          "first_name": [
+            "बिल्ली"
+          ]
+        }
+      },
+      "response": {
+        "body": [
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2016-02-11T09:46:56.023Z",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "बिल्ली",
+            "gender": "M",
+            "id": 1,
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].animal": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].available_from": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$[*].eligibility.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].eligibility.previously_married": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].first_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].gender": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].interests": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].last_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.country": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.post_code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all animals filtered by query",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has some animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          },
+          "query": {}
+        },
+        "method": "GET",
+        "path": "/animals/available",
+        "query": {
+          "first_name": [
+            "Billy"
+          ]
+        }
+      },
+      "response": {
+        "body": [
+          {
+            "age": 21,
+            "animal": "goat",
+            "available_from": "2016-02-11T09:46:56.023Z",
+            "eligibility": {
+              "available": true,
+              "previously_married": false
+            },
+            "first_name": "Billy",
+            "gender": "M",
+            "id": 1,
+            "interests": [
+              "walks in the garden/meadow"
+            ],
+            "last_name": "Goat",
+            "location": {
+              "country": "Australia",
+              "description": "Melbourne Zoo",
+              "post_code": 3000
+            }
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].animal": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].available_from": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$[*].eligibility.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].eligibility.previously_married": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].first_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].gender": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "F|M"
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].interests": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].last_name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.country": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].location.post_code": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to get animals as XML",
+      "providerStates": [
+        {
+          "name": "is authenticated"
+        },
+        {
+          "name": "Has some animals"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer token"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "Bearer\\s[a-z0-9]+"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/animals/available/xml"
+      },
+      "response": {
+        "body": "<?xml version='1.0'?><animals><lion age='27' available_from='2016-02-11T09:46:56.023Z' first_name='Slinky' gender='F' id='1' last_name='Malinky'/><goat age='27' available_from='2016-02-11T09:46:56.023Z' first_name='Head' gender='F' id='3' last_name='Butts'/></animals>",
+        "headers": {
+          "Content-Type": "application/xml; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.animals.goat": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.animals.goat['@age']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.animals.goat['@available_from']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$.animals.goat['@first_name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.animals.goat['@gender']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "M|F"
+                }
+              ]
+            },
+            "$.animals.goat['@id']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.animals.goat['@last_name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.animals.lion": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.animals.lion['@age']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.animals.lion['@available_from']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$.animals.lion['@first_name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.animals.lion['@gender']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "M|F"
+                }
+              ]
+            },
+            "$.animals.lion['@id']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.animals.lion['@last_name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for all animals",
+      "providerStates": [
+        {
+          "name": "is not authenticated"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/animals/available"
+      },
+      "response": {
+        "status": 401
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.1.2"
+    },
+    "pactRust": {
+      "ffi": "0.3.8",
+      "models": "0.4.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "Animal Profile Service V3"
+  }
+}

@@ -1,0 +1,5102 @@
+{
+  "consumer": {
+    "name": "Zoo Application"
+  },
+  "provider": {
+    "name": "Animal Service"
+  },
+  "interactions": [
+    {
+      "_id": "1",
+      "description": "a request to list the latest pacts",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacts/latest"
+            }
+          },
+          "pacts": [
+            {
+              "_links": {
+                "self": [
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+                  },
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0"
+                  }
+                ]
+              },
+              "_embedded": {
+                "consumer": {
+                  "name": "Condor",
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor"
+                    }
+                  },
+                  "_embedded": {
+                    "version": {
+                      "number": "1.3.0"
+                    }
+                  }
+                },
+                "provider": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Pricing%20Service"
+                    }
+                  },
+                  "name": "Pricing Service"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to list pacticipants",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants"
+            },
+            "pacticipants": [
+              {
+                "href": "http://example.org/pacticipants/Condor",
+                "title": "Condor"
+              }
+            ]
+          },
+          "pacticipants": [
+            {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Condor"
+                }
+              },
+              "name": "Condor",
+              "_embedded": {
+                "latest-version": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor/versions/1.3.0"
+                    }
+                  },
+                  "number": "1.3.0"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants/Pricing%20Service"
+            },
+            "versions": {
+              "href": "http://example.org/pacticipants/Pricing%20Service/versions"
+            }
+          },
+          "name": "Pricing Service",
+          "repositoryUrl": "git@git.realestate.com.au:business-systems/pricing-service",
+          "_embedded": {
+            "latest-version": {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Pricing%20Service/versions/1.3.0"
+                }
+              },
+              "number": "1.3.0"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo Thing version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo%20Thing&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where only the version of Foo is specified",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6 and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where one or more versions does not exist",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "reason": "an error message"
+          }
+        },
+        "matchingRules": {
+          "$.body.summary.reason": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for a pacticipant that does not exist",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Wiffle&q[][version]=1.2.3&q[][pacticipant]=Meep&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": [
+            "an error message"
+          ]
+        },
+        "matchingRules": {
+          "$.body.errors": {
+            "min": 1
+          },
+          "$.body.errors[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 and 1.2.4 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            },
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body.matrix": {
+            "min": 2
+          },
+          "$.body.matrix[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the successful rows of the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv&success[]=true"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 with tag prod, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][latest]=true&q[][tag]=prod&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.4&q[][pacticipant]=Bar&q[][latest]=true&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod versions of all other pacticipants",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 (tagged prod) and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp&latest=true&tag=prod"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "1.2.3"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "4.5.6"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method patch",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "patch",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method put",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "'Condor' already exist in the pact-broker, but the 'Pricing Service' does not",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "an error occurs while publishing a pact",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "error": {
+            "message": "An error occurred"
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          },
+          "$.body.error.message": {
+            "match": "regex",
+            "regex": ".*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest prod pacts from all consumers for the Pricing Service'",
+      "providerState": "tagged as prod pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest/prod",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest pacts from all consumers for the Pricing Service'",
+      "providerState": "a latest pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request retrieve a pact for a specific version",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json",
+          "X-Pact-Consumer-Version": "1.3.0"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "no pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the pact between the production verison of Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists for the production version of Condor",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest/prod",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with version 1.3.0, tagged with 'prod'",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-{pacticipant}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-Condor",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-tagged-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-tagged-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-{pacticipant}-{tag}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-tagged-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}.*{tag}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest 'production' version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest tagged 'production' version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-Condor-production",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a non-JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": "<xml></xml>",
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "an invalid request to create a webhook for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": null,
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "request.url": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['request.url']": {
+            "min": 1
+          },
+          "$.body.errors['request.url'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook for a consumer and provider",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:webhooks": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-PB-WEBHOOKS"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:webhooks.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer that does not exist",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "consumer.name": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['consumer.name']": {
+            "min": 1
+          },
+          "$.body.errors['consumer.name'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a global webhook with a JSON body",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },{
+      "description": "a request to list the latest pacts",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacts/latest"
+            }
+          },
+          "pacts": [
+            {
+              "_links": {
+                "self": [
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+                  },
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0"
+                  }
+                ]
+              },
+              "_embedded": {
+                "consumer": {
+                  "name": "Condor",
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor"
+                    }
+                  },
+                  "_embedded": {
+                    "version": {
+                      "number": "1.3.0"
+                    }
+                  }
+                },
+                "provider": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Pricing%20Service"
+                    }
+                  },
+                  "name": "Pricing Service"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to list pacticipants",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants"
+            },
+            "pacticipants": [
+              {
+                "href": "http://example.org/pacticipants/Condor",
+                "title": "Condor"
+              }
+            ]
+          },
+          "pacticipants": [
+            {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Condor"
+                }
+              },
+              "name": "Condor",
+              "_embedded": {
+                "latest-version": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor/versions/1.3.0"
+                    }
+                  },
+                  "number": "1.3.0"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants/Pricing%20Service"
+            },
+            "versions": {
+              "href": "http://example.org/pacticipants/Pricing%20Service/versions"
+            }
+          },
+          "name": "Pricing Service",
+          "repositoryUrl": "git@git.realestate.com.au:business-systems/pricing-service",
+          "_embedded": {
+            "latest-version": {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Pricing%20Service/versions/1.3.0"
+                }
+              },
+              "number": "1.3.0"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo Thing version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo%20Thing&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where only the version of Foo is specified",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6 and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where one or more versions does not exist",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "reason": "an error message"
+          }
+        },
+        "matchingRules": {
+          "$.body.summary.reason": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for a pacticipant that does not exist",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Wiffle&q[][version]=1.2.3&q[][pacticipant]=Meep&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": [
+            "an error message"
+          ]
+        },
+        "matchingRules": {
+          "$.body.errors": {
+            "min": 1
+          },
+          "$.body.errors[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 and 1.2.4 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            },
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body.matrix": {
+            "min": 2
+          },
+          "$.body.matrix[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the successful rows of the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv&success[]=true"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 with tag prod, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][latest]=true&q[][tag]=prod&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.4&q[][pacticipant]=Bar&q[][latest]=true&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod versions of all other pacticipants",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 (tagged prod) and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp&latest=true&tag=prod"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "1.2.3"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "4.5.6"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method patch",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "patch",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method put",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "'Condor' already exist in the pact-broker, but the 'Pricing Service' does not",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "an error occurs while publishing a pact",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "error": {
+            "message": "An error occurred"
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          },
+          "$.body.error.message": {
+            "match": "regex",
+            "regex": ".*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest prod pacts from all consumers for the Pricing Service'",
+      "providerState": "tagged as prod pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest/prod",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest pacts from all consumers for the Pricing Service'",
+      "providerState": "a latest pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request retrieve a pact for a specific version",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json",
+          "X-Pact-Consumer-Version": "1.3.0"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "no pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the pact between the production verison of Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists for the production version of Condor",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest/prod",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with version 1.3.0, tagged with 'prod'",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-{pacticipant}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-Condor",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-tagged-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-tagged-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-{pacticipant}-{tag}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-tagged-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}.*{tag}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest 'production' version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest tagged 'production' version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-Condor-production",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a non-JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": "<xml></xml>",
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "an invalid request to create a webhook for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": null,
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "request.url": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['request.url']": {
+            "min": 1
+          },
+          "$.body.errors['request.url'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook for a consumer and provider",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:webhooks": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-PB-WEBHOOKS"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:webhooks.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer that does not exist",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "consumer.name": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['consumer.name']": {
+            "min": 1
+          },
+          "$.body.errors['consumer.name'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a global webhook with a JSON body",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },{
+      "description": "a request to list the latest pacts",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacts/latest"
+            }
+          },
+          "pacts": [
+            {
+              "_links": {
+                "self": [
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+                  },
+                  {
+                    "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0"
+                  }
+                ]
+              },
+              "_embedded": {
+                "consumer": {
+                  "name": "Condor",
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor"
+                    }
+                  },
+                  "_embedded": {
+                    "version": {
+                      "number": "1.3.0"
+                    }
+                  }
+                },
+                "provider": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Pricing%20Service"
+                    }
+                  },
+                  "name": "Pricing Service"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to list pacticipants",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants"
+            },
+            "pacticipants": [
+              {
+                "href": "http://example.org/pacticipants/Condor",
+                "title": "Condor"
+              }
+            ]
+          },
+          "pacticipants": [
+            {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Condor"
+                }
+              },
+              "name": "Condor",
+              "_embedded": {
+                "latest-version": {
+                  "_links": {
+                    "self": {
+                      "href": "http://example.org/pacticipants/Condor/versions/1.3.0"
+                    }
+                  },
+                  "number": "1.3.0"
+                }
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://example.org/pacticipants/Pricing%20Service"
+            },
+            "versions": {
+              "href": "http://example.org/pacticipants/Pricing%20Service/versions"
+            }
+          },
+          "name": "Pricing Service",
+          "repositoryUrl": "git@git.realestate.com.au:business-systems/pricing-service",
+          "_embedded": {
+            "latest-version": {
+              "_links": {
+                "self": {
+                  "href": "http://example.org/pacticipants/Pricing%20Service/versions/1.3.0"
+                }
+              },
+              "number": "1.3.0"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/hal\\+json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to get the Pricing Service",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "get",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and Bar version 4.5.6",
+      "providerState": "the pact for Foo Thing version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo%20Thing&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=4.5.6&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where only the version of Foo is specified",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6 and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix where one or more versions does not exist",
+      "providerState": "the pact for Foo version 1.2.3 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "reason": "an error message"
+          }
+        },
+        "matchingRules": {
+          "$.body.summary.reason": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for a pacticipant that does not exist",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Wiffle&q[][version]=1.2.3&q[][pacticipant]=Meep&q[][version]=9.9.9&latestby=cvpv"
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": [
+            "an error message"
+          ]
+        },
+        "matchingRules": {
+          "$.body.errors": {
+            "min": 1
+          },
+          "$.body.errors[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 and 1.2.4 has been verified by Bar version 4.5.6",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            },
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body.matrix": {
+            "min": 2
+          },
+          "$.body.matrix[*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the successful rows of the compatibility matrix for all versions of Foo and Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][pacticipant]=Bar&latestby=cvpv&success[]=true"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 with tag prod, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&q[][pacticipant]=Bar&q[][latest]=true&q[][tag]=prod&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest version of Bar",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6, and 1.2.4 unsuccessfully by 9.9.9",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.4&q[][pacticipant]=Bar&q[][latest]=true&latestby=cvpv"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "summary": {
+            "deployable": true,
+            "reason": "some text",
+            "unknown": 1
+          },
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "4"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "5"
+                }
+              },
+              "verificationResult": {
+                "verifiedAt": "2017-10-10T12:49:04+11:00",
+                "success": true
+              },
+              "pact": {
+                "createdAt": "2017-10-10T12:49:04+11:00"
+              }
+            }
+          ]
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the compatibility matrix for Foo version 1.2.3 and the latest prod versions of all other pacticipants",
+      "providerState": "the pact for Foo version 1.2.3 has been successfully verified by Bar version 4.5.6 (tagged prod) and version 5.6.7",
+      "request": {
+        "method": "get",
+        "path": "/matrix",
+        "query": "q[][pacticipant]=Foo&q[][version]=1.2.3&latestby=cvp&latest=true&tag=prod"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "matrix": [
+            {
+              "consumer": {
+                "name": "Foo",
+                "version": {
+                  "number": "1.2.3"
+                }
+              },
+              "provider": {
+                "name": "Bar",
+                "version": {
+                  "number": "4.5.6"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method patch",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "patch",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact with method put",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "'Condor' already exist in the pact-broker, but the 'Pricing Service' does not",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-pact-version": {
+              "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/latest"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to publish a pact",
+      "providerState": "an error occurs while publishing a pact",
+      "request": {
+        "method": "put",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "application/hal+json"
+        },
+        "body": {
+          "error": {
+            "message": "An error occurred"
+          }
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          },
+          "$.body.error.message": {
+            "match": "regex",
+            "regex": ".*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' does not exist in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request to register the repository URL of a pacticipant",
+      "providerState": "the 'Pricing Service' already exists in the pact-broker",
+      "request": {
+        "method": "patch",
+        "path": "/pacticipants/Pricing%20Service",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "repository_url": "git@git.realestate.com.au:business-systems/pricing-service"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest prod pacts from all consumers for the Pricing Service'",
+      "providerState": "tagged as prod pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest/prod",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the list of the latest pacts from all consumers for the Pricing Service'",
+      "providerState": "a latest pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "_links": {
+            "provider": {
+              "href": "http://example.org/pacticipants/Pricing%20Service",
+              "title": "Pricing Service"
+            },
+            "pb:pacts": [
+              {
+                "href": "http://example.org/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+                "title": "Pact between Condor (v1.3.0) and Pricing Service",
+                "name": "Condor"
+              }
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request retrieve a pact for a specific version",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker, and Condor already has a pact published for version 1.3.0",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/version/1.3.0",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json",
+          "X-Pact-Consumer-Version": "1.3.0"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        },
+        "matchingRules": {
+          "$.headers.Content-Type": {
+            "match": "regex",
+            "regex": "application\\/.*json"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest pact between Condor and the Pricing Service",
+      "providerState": "no pact between Condor and the Pricing Service exists",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest",
+        "headers": {
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the pact between the production verison of Condor and the Pricing Service",
+      "providerState": "a pact between Condor and the Pricing Service exists for the production version of Condor",
+      "request": {
+        "method": "get",
+        "path": "/pacts/provider/Pricing%20Service/consumer/Condor/latest/prod",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "consumer": {
+            "name": "Condor"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          },
+          "interactions": [
+
+          ]
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to tag the production version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with version 1.3.0, tagged with 'prod'",
+      "request": {
+        "method": "put",
+        "path": "/pacticipants/Condor/versions/1.3.0/tags/prod",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/pacticipants/Condor/versions/1.3.0/tags/prod"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*\\/pacticipants\\/Condor\\/versions\\/1.3.0\\/tags\\/prod"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-{pacticipant}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-VERSION-Condor",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "providerState": "the pb:latest-tagged-version relation exists in the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:latest-tagged-version": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-{pacticipant}-{tag}"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:latest-tagged-version.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*{pacticipant}.*{tag}"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to retrieve the latest 'production' version of Condor",
+      "providerState": "'Condor' exists in the pact-broker with the latest tagged 'production' version 1.2.3",
+      "request": {
+        "method": "get",
+        "path": "/HAL-REL-PLACEHOLDER-INDEX-PB-LATEST-TAGGED-VERSION-Condor-production",
+        "headers": {
+          "Accept": "application/hal+json, application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "number": "1.2.3",
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a non-JSON body for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": "<xml></xml>",
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "an invalid request to create a webhook for a consumer and provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": null,
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "request.url": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['request.url']": {
+            "min": 1
+          },
+          "$.body.errors['request.url'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook for a consumer and provider",
+      "providerState": "'Condor' does not exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/webhooks/provider/Pricing%20Service/consumer/Condor",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        }
+      }
+    },
+    {
+      "description": "a request for the index resource",
+      "request": {
+        "method": "get",
+        "path": "/",
+        "headers": {
+          "Accept": "application/hal+json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "pb:webhooks": {
+              "href": "http://localhost:1234/HAL-REL-PLACEHOLDER-PB-WEBHOOKS"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.pb:webhooks.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a consumer that does not exist",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "consumer": {
+            "name": "Condor"
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "errors": {
+            "consumer.name": [
+              "Some error"
+            ]
+          }
+        },
+        "matchingRules": {
+          "$.body.errors['consumer.name']": {
+            "min": 1
+          },
+          "$.body.errors['consumer.name'][*].*": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a webhook with a JSON body for a provider",
+      "providerState": "the 'Pricing Service' and 'Condor' already exist in the pact-broker",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          },
+          "provider": {
+            "name": "Pricing Service"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to create a global webhook with a JSON body",
+      "request": {
+        "method": "post",
+        "path": "/HAL-REL-PLACEHOLDER-PB-WEBHOOKS",
+        "headers": {
+          "Content-Type": "application/json",
+          "Accept": "application/hal+json"
+        },
+        "body": {
+          "events": [
+            {
+              "name": "contract_content_changed"
+            }
+          ],
+          "request": {
+            "url": "https://webhook",
+            "method": "POST",
+            "headers": {
+              "Foo": "bar",
+              "Bar": "foo"
+            },
+            "body": {
+              "some": "body"
+            },
+            "username": "username",
+            "password": "password"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/hal+json;charset=utf-8"
+        },
+        "body": {
+          "_links": {
+            "self": {
+              "href": "http://localhost:1234/some-url",
+              "title": "A title"
+            }
+          }
+        },
+        "matchingRules": {
+          "$.body._links.self.href": {
+            "match": "regex",
+            "regex": "http:\\/\\/.*"
+          },
+          "$.body._links.self.title": {
+            "match": "type"
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "consumer": {
+    "name": "consumer-ruby-v2"
+  },
+  "provider": {
+    "name": "provider-ruby-v2"
+  },
+  "interactions": [
+    {
+      "description": "A request for API health",
+      "providerState": "Server is healthy",
+      "request": {
+        "method": "get",
+        "path": "/health"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "status": "up"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

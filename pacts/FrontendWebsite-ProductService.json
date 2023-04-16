@@ -1,0 +1,72 @@
+{
+  "consumer": {
+    "name": "FrontendWebsite"
+  },
+  "interactions": [
+    {
+      "description": "get product with ID 10",
+      "providerState": "product with ID 10 exists",
+      "request": {
+        "method": "GET",
+        "path": "/products/10"
+      },
+      "response": {
+        "body": {
+          "id": "10",
+          "name": "28 Degrees",
+          "type": "CREDIT_CARD"
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "get all products",
+      "providerState": "products exist",
+      "request": {
+        "method": "GET",
+        "path": "/products"
+      },
+      "response": {
+        "body": [
+          {
+            "id": "09",
+            "name": "Gem Visa",
+            "type": "CREDIT_CARD"
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.0.0-beta.62"
+    },
+    "pactRust": {
+      "ffi": "0.2.4",
+      "models": "0.3.1"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "ProductService"
+  }
+}

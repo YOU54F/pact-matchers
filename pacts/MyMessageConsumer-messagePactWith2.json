@@ -1,0 +1,68 @@
+{
+  "consumer": {
+    "name": "MyMessageConsumer"
+  },
+  "messages": [
+    {
+      "contents": {
+        "id": 1,
+        "name": "rover",
+        "type": "bulldog"
+      },
+      "description": "a request for a dog",
+      "matchingRules": {
+        "body": {
+          "$.id": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.name": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "type"
+              }
+            ]
+          },
+          "$.type": {
+            "combine": "AND",
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "^(bulldog|sheepdog)$"
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "content-type": "application/json",
+        "contentType": "application/json"
+      },
+      "providerStates": [
+        {
+          "name": "some state"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.0.2"
+    },
+    "pactRust": {
+      "ffi": "0.2.4",
+      "models": "0.3.1"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "messagePactWith2"
+  }
+}

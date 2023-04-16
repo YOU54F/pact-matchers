@@ -1,0 +1,296 @@
+{
+  "consumer": {
+    "name": "TodoApp"
+  },
+  "interactions": [
+    {
+      "description": "a request for projects",
+      "providerStates": [
+        {
+          "name": "i have a list of projects"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "method": "GET",
+        "path": "/projects",
+        "query": {
+          "from": [
+            "today"
+          ]
+        }
+      },
+      "response": {
+        "body": [
+          {
+            "due": "2016-02-11T09:46:56.023Z",
+            "id": 1,
+            "name": "Project 1",
+            "tasks": [
+              {
+                "done": true,
+                "id": 101,
+                "name": "Do the laundry"
+              },
+              {
+                "done": true,
+                "id": 101,
+                "name": "Do the laundry"
+              },
+              {
+                "done": true,
+                "id": 101,
+                "name": "Do the laundry"
+              },
+              {
+                "done": true,
+                "id": 101,
+                "name": "Do the laundry"
+              }
+            ]
+          }
+        ],
+        "generators": {
+          "body": {
+            "$[*].tasks[*].id": {
+              "max": 10,
+              "min": 0,
+              "type": "RandomInt"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].due": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "timestamp",
+                  "timestamp": "yyyy-MM-dd'T'HH:mm:ss.SSSX"
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].tasks": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ]
+            },
+            "$[*].tasks[*].done": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$[*].tasks[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                },
+                {
+                  "match": "integer"
+                },
+                {
+                  "match": "integer"
+                },
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].tasks[*].name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                },
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request for projects in XML",
+      "providerStates": [
+        {
+          "name": "i have a list of projects"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": "application/xml"
+        },
+        "matchingRules": {
+          "header": {
+            "$.Accept": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/.*xml"
+                }
+              ]
+            }
+          },
+          "query": {}
+        },
+        "method": "GET",
+        "path": "/projects",
+        "query": {
+          "from": [
+            "today"
+          ]
+        }
+      },
+      "response": {
+        "body": "<?xml version='1.0'?><ns1:projects id='1234' xmlns:ns1='http://some.namespace/and/more/stuff'><ns1:project id='1' name='Project 1' type='activity'><ns1:tasks><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/></ns1:tasks></ns1:project><ns1:project id='1' name='Project 1' type='activity'><ns1:tasks><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/><ns1:task done='true' id='1' name='Task 1'/></ns1:tasks></ns1:project></ns1:projects>",
+        "headers": {
+          "Content-Type": "application/xml"
+        },
+        "matchingRules": {
+          "body": {
+            "$.ns1:projects.ns1:project": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project.ns1:tasks.ns1:task": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project.ns1:tasks.ns1:task['@done']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project.ns1:tasks.ns1:task['@id']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project.ns1:tasks.ns1:task['@name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project['@id']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$.ns1:projects.ns1:project['@name']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {
+            "$['Content-Type']": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/.*xml(;.*)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "10.1.2"
+    },
+    "pactRust": {
+      "ffi": "0.3.8",
+      "models": "0.4.4"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "TodoServiceV3"
+  }
+}

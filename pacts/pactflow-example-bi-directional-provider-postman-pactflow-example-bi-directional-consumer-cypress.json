@@ -1,0 +1,72 @@
+{
+  "consumer": { "name": "pactflow-example-bi-directional-consumer-cypress" },
+  "provider": { "name": "pactflow-example-bi-directional-provider-postman" },
+  "interactions": [
+    {
+      "description": "displays product item",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/product/09",
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "authorization": "Bearer 2022-06-09T18:20:31.736Z"
+        },
+        "body": "",
+        "query": ""
+      },
+      "response": {
+        "status": 200,
+        "headers": { "access-control-allow-origin": "*", "content-type": "application/json" },
+        "body": { "id": "09", "type": "CREDIT_CARD", "name": "Gem Visa", "version": "v1", "price": 99.99 }
+      }
+    },
+    {
+      "description": "displays product item by query",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/products",
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "authorization": "Bearer 2022-06-09T18:20:47.969Z"
+        },
+        "body": "",
+        "query": "id=2"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "access-control-allow-origin": "*", "content-type": "application/json" },
+        "body": [
+          { "id": "09", "type": "CREDIT_CARD", "name": "Gem Visa", "version": "v1", "price": 99.99 },
+          { "id": "10", "type": "CREDIT_CARD", "name": "28 Degrees", "version": "v1", "price": 49.49 },
+          { "id": "11", "type": "PERSONAL_LOAN", "name": "MyFlexiPay", "version": "v2", "price": 16.5 }
+        ]
+      }
+    },
+    {
+      "description": "displays products",
+      "providerState": "",
+      "request": {
+        "method": "GET",
+        "path": "/products",
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "authorization": "Bearer 2022-06-09T18:21:03.468Z"
+        },
+        "body": "",
+        "query": ""
+      },
+      "response": {
+        "status": 200,
+        "headers": { "access-control-allow-origin": "*", "content-type": "application/json" },
+        "body": [
+          { "id": "09", "type": "CREDIT_CARD", "name": "Gem Visa", "version": "v1", "price": 99.99 },
+          { "id": "10", "type": "CREDIT_CARD", "name": "28 Degrees", "version": "v1", "price": 49.49 },
+          { "id": "11", "type": "PERSONAL_LOAN", "name": "MyFlexiPay", "version": "v2", "price": 16.5 }
+        ]
+      }
+    }
+  ],
+  "metadata": { "pactSpecification": { "version": "2.0.0" } }
+}

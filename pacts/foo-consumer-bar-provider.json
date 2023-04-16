@@ -1,0 +1,255 @@
+{
+  "consumer": {
+    "name": "foo-consumer"
+  },
+  "interactions": [
+    {
+      "description": "a request to create a dog with binary data",
+      "providerStates": [
+        {
+          "name": "fido exists"
+        }
+      ],
+      "request": {
+        "body": "H4sIAAAAAAAAEyvJyCxWAKLEPIXUvOT8lNQUheKSosy8dADqFSK8GQAAAA==",
+        "headers": {
+          "Content-Type": "application/octet-stream",
+          "x-special-header": "header"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "contentType",
+                  "value": "application/gzip"
+                }
+              ]
+            }
+          },
+          "header": {},
+          "query": {}
+        },
+        "method": "POST",
+        "path": "/dogs/1234",
+        "query": {
+          "someParam": [
+            "someValue"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "age": 23,
+          "alive": true,
+          "name": "fido"
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "x-special-response-header": "header"
+        },
+        "matchingRules": {
+          "body": {
+            "$.age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.alive": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to get a create with JSON data",
+      "providerStates": [
+        {
+          "name": "fido exists"
+        }
+      ],
+      "request": {
+        "headers": {
+          "x-special-header": "header"
+        },
+        "method": "POST",
+        "path": "/dogs/1234",
+        "query": {
+          "someParam": [
+            "someValue"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "age": 23,
+          "alive": true,
+          "name": "fido"
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "x-special-response-header": "header"
+        },
+        "matchingRules": {
+          "body": {
+            "$.age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.alive": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a request to get a dog with multipart data",
+      "providerStates": [
+        {
+          "name": "fido exists"
+        }
+      ],
+      "request": {
+        "body": "--IEjqZmKewwP67TvL\r\nContent-Disposition: form-data; name=\"my_file\"; filename=\"monkeypatch.rb\"\r\nContent-Type: application/octet-stream\r\n\r\ndef Filelock(lockname, options = {}, &block)\n  puts \"Opening file without filelock\"\n  File.open(lockname, File::RDWR|File::CREAT, 0644) do |file|\n    Timeout::timeout(options.fetch(:timeout, 60), Filelock::ExecTimeout) { yield file }\n  end\nend\n\r\n--IEjqZmKewwP67TvL--\r\n",
+        "headers": {
+          "Content-Type": "multipart/form-data; boundary=IEjqZmKewwP67TvL",
+          "x-special-header": "header"
+        },
+        "matchingRules": {
+          "body": {
+            "$.my_file": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "contentType",
+                  "value": "text/plain"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "multipart/form-data;(\\s*charset=[^;]*;)?\\s*boundary=.*"
+                }
+              ]
+            }
+          },
+          "query": {}
+        },
+        "method": "POST",
+        "path": "/dogs/1234",
+        "query": {
+          "someParam": [
+            "someValue"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "age": 23,
+          "alive": true,
+          "name": "fido"
+        },
+        "headers": {
+          "Content-Type": "application/json",
+          "x-special-header": "header"
+        },
+        "matchingRules": {
+          "body": {
+            "$.age": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.alive": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.name": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.2.3",
+      "mockserver": "0.8.7",
+      "models": "0.2.7"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "bar-provider"
+  }
+}
