@@ -4,10 +4,9 @@
   "description": "",
   "main": "matchers.pact.test.js",
   "scripts": {
-    "test": "jest",
-    "test:all": "npm run test:consumer && npm run test:provider",
-    "test:provider": "jest ./provider.pact.test.js --detectOpenHandles --testTimeout 30000",
-    "test:consumer": "jest matchers.v2.*.test --detectOpenHandles --testTimeout 30000"
+    "test": "npm run test:consumer && npm run test:provider",
+    "test:consumer": "jest matchers.*.test --detectOpenHandles --testTimeout 30000",
+    "test:provider": "jest ./provider.pact.test.js --detectOpenHandles --testTimeout 30000"
   },
   "author": "Yousaf Nabi",
   "license": "ISC",
