@@ -2,7 +2,7 @@
 
 // run the following 2 commands in your terminal
 //
-// npm install @pact-foundation/pact jest axios --save-dev
+// npm install @you54f/pact jest axios --save-dev
 // $(npm bin)/jest --init
 //
 // select the following options ( n / node / n / v8 / n )
@@ -20,9 +20,9 @@ const api = (baseUrl = defaultBaseUrl) => ({
   /* other endpoints here */
 });
 
-const { Pact, Matchers } = require('@pact-foundation/pact');
+const { Pact, Matchers } = require('@you54f/pact');
 const provider = new Pact({
-  consumer: 'v2-consumer-pact-js',
+  consumer: 'v2-consumer-pact-js-v9',
   provider: 'v2-provider'
 });
 
@@ -39,7 +39,7 @@ const {
   iso8601DateTime,
   iso8601DateTimeWithMillis,
   iso8601Time,
-  rfc1123Timestamp,
+  rfc3339Timestamp,
   somethingLike,
   string,
   term,
@@ -116,8 +116,8 @@ describe('showcase pact v2 matchers', () => {
       decimalPattern: decimal(10.1),
       integer: integer(),
       integerPattern: integer(10.1),
-      rfc1123Timestamp: rfc1123Timestamp(),
-      rfc1123TimestampPattern: rfc1123Timestamp(
+      rfc3339Timestamp: rfc3339Timestamp(),
+      rfc3339TimestampPattern: rfc3339Timestamp(
         'Mon, 31 Oct 2016 15:21:41 -0400'
       ),
       iso8601Time: iso8601Time(),
@@ -188,8 +188,8 @@ describe('showcase pact v2 matchers', () => {
       decimalPattern: 10.1,
       integer: 13,
       integerPattern: 10.1,
-      rfc1123Timestamp: 'Mon, 31 Oct 2016 15:21:41 -0400',
-      rfc1123TimestampPattern: 'Mon, 31 Oct 2016 15:21:41 -0400',
+      rfc3339Timestamp: 'Mon, 31 Oct 2016 15:21:41 -0400',
+      rfc3339TimestampPattern: 'Mon, 31 Oct 2016 15:21:41 -0400',
       iso8601Time: 'T22:44:30.652Z',
       iso8601TimePattern: 'T22:44:30.652Z',
       iso8601Date: '2013-02-01',

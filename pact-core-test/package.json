@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@you54f/pact-core": "^13.15.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@you54f/pact-node": "^10.18.0"
+  }
+}

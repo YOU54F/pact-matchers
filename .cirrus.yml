@@ -1,0 +1,58 @@
+env:
+  NODE_VERSION: '16'
+  LOG_LEVEL: info
+
+BUILD_TEST_TASK_TEMPLATE: &BUILD_TEST_TASK_TEMPLATE
+  arch_check_script:
+    - uname -am
+  build_script:
+    - node --version
+  pact-js-ruby_e2e_script:
+    - cd pact-js-ruby && npm install && npm test:all
+  pact-js-rust_script:
+    - cd pact-js-rust && npm install && npm test:all
+
+linux_arm64_task: 
+  arm_container:
+    matrix:
+      # - image: node:latest
+      # - image: node:19
+      - image: node:18
+      # - image: node:16
+      # - image: node:14
+    cpu: 4
+    memory: 12G
+  setup_script:
+    - apt update --yes && apt install --yes jq
+  << : *BUILD_TEST_TASK_TEMPLATE
+
+macosx_arm64_task: 
+  matrix:
+    # - macos_instance:
+    #     image: ghcr.io/cirruslabs/macos-ventura-base:latest
+    #     setup_node__script: |
+    #         brew install nvm
+    #         source $(brew --prefix nvm)/nvm.sh
+    #         nvm install 19 && nvm use 19
+    - macos_instance:
+        image: ghcr.io/cirruslabs/macos-ventura-base:latest
+        setup_node__script: |
+            brew install nvm
+            source $(brew --prefix nvm)/nvm.sh
+            nvm install 19 && nvm use 18
+    # - macos_instance:
+    #     image: ghcr.io/cirruslabs/macos-ventura-base:latest
+    #     setup_node__script: |
+    #         brew install nvm
+    #         source $(brew --prefix nvm)/nvm.sh
+    #         nvm install 19 && nvm use 16
+    # - macos_instance:
+    #     image: ghcr.io/cirruslabs/macos-ventura-base:latest
+    #     setup_node__script: |
+    #         brew install nvm
+    #         source $(brew --prefix nvm)/nvm.sh
+    #         nvm install 19 && nvm use 14
+  # Rosetta needed for 9.x.x @pact-foundation/pact
+    # - softwareupdate --install-rosetta --agree-to-license
+  << : *BUILD_TEST_TASK_TEMPLATE
+

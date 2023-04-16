@@ -1,4 +1,4 @@
-const { Verifier } = require('@pact-foundation/pact');
+const { Verifier } = require('@you54f/pact');
 const { server } = require('./provider');
 
 describe('Pact Verification', () => {

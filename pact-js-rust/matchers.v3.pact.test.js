@@ -2,7 +2,7 @@
 
 // run the following 2 commands in your terminal
 //
-// npm install @pact-foundation/pact jest axios --save-dev
+// npm install @you54f/pact jest axios --save-dev
 // $(npm bin)/jest --init
 //
 // select the following options ( n / node / n / v8 / n )
@@ -20,7 +20,7 @@ const api = (baseUrl = defaultBaseUrl) => ({
   /* other endpoints here */
 });
 
-const { PactV3, MatchersV3 } = require('@pact-foundation/pact');
+const { PactV3, MatchersV3 } = require('@you54f/pact');
 const provider = new PactV3({
   consumer: 'v3-consumer-pact-js',
   provider: 'v3-provider'
