@@ -16,14 +16,14 @@ const axios = require('axios');
 const defaultBaseUrl = 'http://your-api.example.com';
 const api = (baseUrl = defaultBaseUrl) => ({
   getMatchers: () =>
-    axios.get(baseUrl + '/matchers/v2').then((response) => response.data)
+    axios.get(baseUrl + '/matchers/v2',{headers:{'Accept':"application/json"}}).then((response) => response.data).catch((error) => console.log(error))
   /* other endpoints here */
 });
 
 const { Pact, Matchers } = require('@you54f/pact');
 const provider = new Pact({
   consumer: 'v2-consumer-pact-js',
-  provider: 'v2-provider'
+  provider: 'v2-provider',
 });
 
 const {
@@ -217,7 +217,12 @@ describe('showcase pact v2 matchers', () => {
     });
 
     // Configure your client under test to use the Pact mock service URL
-    const client = api(provider.mockService.baseUrl);
+    console.log("http://localhost:"+provider.mockService.baseUrl.split(":")[2])
+    console.log(provider.mockService.baseUrl);
+
+    const client = api("http://localhost:"+provider.mockService.baseUrl.split(":")[2]);
+    // const client = api(provider.mockService.baseUrl);
+
     // console.log(
     //   extractPayload(responsePayloadWithAllMatchers.eachLikeComplexStructure)
     // );
