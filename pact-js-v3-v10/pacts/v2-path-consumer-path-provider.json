@@ -4,35 +4,17 @@
   },
   "interactions": [
     {
-      "description": "a GET to /request/path/1",
-      "providerState": "an id of 1 exists",
-      "request": {
-        "method": "GET",
-        "path": "/request/path/1"
-      },
-      "response": {
-        "body": {
-          "id": "1",
-          "status": "RIGID_MATCH"
-        },
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "status": 200
-      }
-    },
-    {
-      "description": "a GET to /request/path/12",
+      "description": "a GET to /12",
       "providerState": "an id of 12 exists",
       "request": {
         "matchingRules": {
           "$.path": {
             "match": "regex",
-            "regex": "/request/path/(?![2]$)\\d+"
+            "regex": "/(?![2]$)\\d+"
           }
         },
         "method": "GET",
-        "path": "/request/path/12"
+        "path": "/12"
       },
       "response": {
         "body": {

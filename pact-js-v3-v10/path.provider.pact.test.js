@@ -24,8 +24,9 @@ describe('Pact Verification', () => {
       stateHandlers: {
         ["an id of 12 exists"]: {
           setup: (parameters) => {
-            // do your setup here
-            // return a promise if you need to
+            server.get('/12', (req, res) => {
+              res.json({ id: "12", status: "LOOSE_MATCH" });
+            });
             return Promise.resolve("Seeded data")
           },
           teardown: (parameters) => {

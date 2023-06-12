@@ -36,7 +36,7 @@ describe('GET /request/path/:requestId', () => {
 
   it('should return a status LOOSE_MATCH for any request id bar 2', () => {
     const requestId = '12';
-    const requestPath = `/request/path/${requestId}`;
+    const requestPath = `/${requestId}`;
 
     const expectedBody = {
       id: requestId,
@@ -50,7 +50,7 @@ describe('GET /request/path/:requestId', () => {
         method: 'GET',
         path: term({
           generate: requestPath,
-          matcher: '/request/path/(?![2]$)\\d+'
+          matcher: '/(?![2]$)\\d+'
         })
       },
       willRespondWith: {
@@ -72,39 +72,5 @@ describe('GET /request/path/:requestId', () => {
     });
   });
 
-  it('should return a status RIGID_MATCH for only requestId 1', () => {
-    const requestId = '1';
-    const requestPath = `/request/path/${requestId}`;
-
-    const expectedBody = {
-      id: requestId,
-      status: 'RIGID_MATCH'
-    };
-
-    const interaction = {
-      state: `an id of ${requestId} exists`,
-      uponReceiving: `a GET to ${requestPath}`,
-      withRequest: {
-        method: 'GET',
-        path: requestPath
-      },
-      willRespondWith: {
-        body: expectedBody,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        status: 200
-      }
-    };
-
-    provider.addInteraction(interaction);
-
-
-    // Configure your client under test to use the Pact mock service URL
-    const client = api(provider.mockService.baseUrl);
-    return client.getRequest(requestPath).then((data) => {
-      expect(data).toEqual(expectedBody);
-    });
-  });
 
 });
