@@ -28,6 +28,7 @@ const provider = new Pact({
 
 const {
   term,
+  like
 } = Matchers;
 describe('GET /request/path/:requestId', () => {
   beforeAll(() => provider.setup());
@@ -54,7 +55,13 @@ describe('GET /request/path/:requestId', () => {
         })
       },
       willRespondWith: {
-        body: expectedBody,
+        body: {
+          id: like(requestId),
+          status: term({
+            generate: "LOOSE_MATCH",
+            matcher: 'LOOSE_MATCH|RIGID_MATCH'
+          })
+        },
         headers: {
           'Content-Type': 'application/json'
         },

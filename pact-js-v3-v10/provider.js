@@ -225,7 +225,7 @@ server.get('/matchers/v3', (req, res) => {
 });
 
 server.get('/1', (req, res) => {
-  res.json({ id: 1, status: "RIGID_MATCH" });
+  res.json({ id: "1", status: "RIGID_MATCH" });
 });
 
 // server.get('/:id', (req, res) => {

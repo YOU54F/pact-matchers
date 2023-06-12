@@ -7,7 +7,9 @@ describe('Pact Verification', () => {
     listener = server.listen(8081);
   });
 
+
   it('validates the expectations of PathProviderService', () => {
+    let rewriteUrl = false
     const opts = {
       logLevel: 'INFO',
       providerBaseUrl: 'http://localhost:8081',
@@ -24,9 +26,7 @@ describe('Pact Verification', () => {
       stateHandlers: {
         ["an id of 12 exists"]: {
           setup: (parameters) => {
-            server.get('/12', (req, res) => {
-              res.json({ id: "12", status: "LOOSE_MATCH" });
-            });
+            rewriteUrl = '/1'
             return Promise.resolve("Seeded data")
           },
           teardown: (parameters) => {
@@ -35,6 +35,18 @@ describe('Pact Verification', () => {
           },
           
         }
+      },
+      requestFilter: (req, res, next) => {
+        if (rewriteUrl != false && req.url != '/_pactSetup') {
+          console.log('setting rewrite url for ', {
+            rewriteUrl: rewriteUrl,
+            originalRelUrl: req.url,
+            resBody: req.body
+          });
+          req.url = rewriteUrl
+        }
+        rewriteUrl = false
+        next();
       }
     };
 

@@ -24,6 +24,15 @@
         "headers": {
           "Content-Type": "application/json"
         },
+        "matchingRules": {
+          "$.body.id": {
+            "match": "type"
+          },
+          "$.body.status": {
+            "match": "regex",
+            "regex": "LOOSE_MATCH|RIGID_MATCH"
+          }
+        },
         "status": 200
       }
     }
