@@ -1,0 +1,64 @@
+{
+  "consumer": {
+    "name": "v2-path-consumer"
+  },
+  "interactions": [
+    {
+      "description": "a GET to /request/path/1",
+      "providerState": "an id of 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/request/path/1"
+      },
+      "response": {
+        "body": {
+          "id": "1",
+          "status": "RIGID_MATCH"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "a GET to /request/path/12",
+      "providerState": "an id of 12 exists",
+      "request": {
+        "matchingRules": {
+          "$.path": {
+            "match": "regex",
+            "regex": "/request/path/(?![2]$)\\d+"
+          }
+        },
+        "method": "GET",
+        "path": "/request/path/12"
+      },
+      "response": {
+        "body": {
+          "id": "12",
+          "status": "LOOSE_MATCH"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "11.0.2"
+    },
+    "pactRust": {
+      "ffi": "0.4.0",
+      "models": "1.0.4"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "path-provider"
+  }
+}

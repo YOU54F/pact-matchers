@@ -224,6 +224,14 @@ server.get('/matchers/v3', (req, res) => {
   });
 });
 
+server.get('/request/path/1', (req, res) => {
+  res.json({ id: 1, status: "RIGID_MATCH" });
+});
+
+server.get('/request/path/:id', (req, res) => {
+  res.json({ id: req.params.id, status: "LOOSE_MATCH" });
+});
+
 module.exports = {
   server
 };
